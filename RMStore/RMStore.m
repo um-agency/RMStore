@@ -363,6 +363,9 @@ typedef void (^RMStoreSuccessBlock)();
 }
 
 #pragma mark SKPaymentTransactionObserver
+- (BOOL)paymentQueue:(SKPaymentQueue *)queue shouldAddStorePayment:(SKPayment *)payment forProduct:(SKProduct *)product {
+    return YES;
+}
 
 - (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions
 {
