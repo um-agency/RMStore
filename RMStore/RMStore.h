@@ -25,6 +25,7 @@
 @protocol RMStoreReceiptVerifier;
 @protocol RMStoreTransactionPersistor;
 @protocol RMStoreObserver;
+@protocol RMStoreDelegate;
 
 extern NSString *const RMStoreErrorDomain;
 extern NSInteger const RMStoreErrorCodeDownloadCanceled;
@@ -139,6 +140,8 @@ extern NSInteger const RMStoreErrorCodeUnableToCompleteVerification;
 /// @name Setting Delegates
 ///---------------------------------------------
 
+@property (nonatomic, weak) id<RMStoreDelegate> delegate;
+
 /**
  The content downloader. Required to download product content from your own server.
  @discussion Hosted content from Apple’s server (SKDownload) is handled automatically. You don't need to provide a content downloader for it.
@@ -207,6 +210,12 @@ extern NSInteger const RMStoreErrorCodeUnableToCompleteVerification;
 
 - (void)persistTransaction:(SKPaymentTransaction*)transaction;
 
+@end
+
+@protocol RMStoreDelegate <NSObject>
+@optional
+//Should perform payment from appstore promoted inapps
+- (BOOL)shouldAddStorePayment:(SKPayment *)payment forProduct:(SKProduct *)product;
 @end
 
 @protocol RMStoreReceiptVerifier <NSObject>
